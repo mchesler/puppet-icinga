@@ -11,13 +11,15 @@ ScriptAlias /icinga/cgi-bin "<%= scope.lookupvar('icinga::usrlib') %>/icinga/cgi
   Order allow,deny
   Allow from all
 <% if scope.lookupvar('icinga::use_auth')  %>
- Order deny,allow
- Deny from all
- Allow from 127.0.0.1
   AuthName "Icinga Access"
   AuthType Basic
-  AuthUserFile /etc/icinga/htpasswd.users
-  Require valid-user
+  AuthzLDAPAuthoritative off
+  AuthzLDAPMethod ldap
+  AuthzLDAPServer "<%= scope.lookupvar('::ldap_servers').split(',')[0] %>:389"
+  AuthzLDAPUserKey "uid"
+  AuthzLDAPUserBase "cn=users,cn=accounts,dc=laddersoffice,dc=net"
+  AuthzLDAPUserScope "subtree"
+  require valid-user
 <% end %>
 </Directory>
 
@@ -30,12 +32,14 @@ Alias /icinga "/usr/share/icinga/"
   Order allow,deny
   Allow from all
 <% if scope.lookupvar('icinga::use_auth')  %>
- Order deny,allow
- Deny from all
- Allow from 127.0.0.1
   AuthName "Icinga Access"
   AuthType Basic
-  AuthUserFile /etc/icinga/htpasswd.users
-  Require valid-user
+  AuthzLDAPAuthoritative off
+  AuthzLDAPMethod ldap
+  AuthzLDAPServer "<%= scope.lookupvar('::ldap_servers').split(',')[0] %>:389"
+  AuthzLDAPUserKey "uid"
+  AuthzLDAPUserBase "cn=users,cn=accounts,dc=laddersoffice,dc=net"
+  AuthzLDAPUserScope "subtree"
+  require valid-user
 <% end %>
 </Directory>

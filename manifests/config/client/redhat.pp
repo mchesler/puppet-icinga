@@ -31,5 +31,12 @@ class icinga::config::client::redhat {
     "${::icinga::includedir_client}/default.cfg":
       ensure  => present,
       content => template('icinga/redhat/nrpe_default.cfg.erb');
+
+    "/etc/sudoers.d/nagios":
+      ensure  => present,
+      owner   => root,
+      group   => root,
+      mode    => '0440',
+      content => template('icinga/redhat/nagios_sudoers.erb');
   }
 }

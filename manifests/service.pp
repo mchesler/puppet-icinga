@@ -50,6 +50,14 @@ class icinga::service {
             hasrestart => $icinga::service_server_hasrestart,
             hasstatus  => $icinga::service_server_hasstatus,
         }
+
+        service {
+          $icinga::service_webserver:
+            ensure     => $icinga::service_server_ensure,
+            enable     => $icinga::service_server_enable,
+            hasrestart => $icinga::service_server_hasrestart,
+            hasstatus  => $icinga::service_server_hasstatus,
+        }
       }
     }
 

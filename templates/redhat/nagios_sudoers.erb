@@ -1,0 +1,6 @@
+## File managed with puppet ##
+## Served by:          '<%= scope.lookupvar('::servername') %>'
+## Module:             '<%= scope.to_hash['module_name'] %>'
+## Template Source:    '<%= template_source %>'
+
+nagios ALL=(ALL) NOPASSWD: /usr/lib64/nagios/plugins/*

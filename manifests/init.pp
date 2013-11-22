@@ -123,10 +123,12 @@ class icinga (
   include icinga::plugins
   include icinga::collect
   include icinga::service
+  include icinga::users
 
   Class['icinga::preinstall'] ->
   Class['icinga::install'] ->
   Class['icinga::config'] ->
+  Class['icinga::users'] ->
   Class['icinga::plugins'] ->
   Class['icinga::collect'] ->
   Class['icinga::service']
