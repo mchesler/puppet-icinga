@@ -72,6 +72,7 @@ class icinga::config::server::common {
   file{"${::icinga::sharedir_server}/images/logos/os":
     recurse => true,
     source  => 'puppet:///modules/icinga/img-os',
+    mode    => '0644',
   }
 
   file{$::icinga::htpasswd_file:
