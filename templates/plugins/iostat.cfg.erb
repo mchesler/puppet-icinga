@@ -1,6 +1,7 @@
-#
-# Managed by Puppet
-#
+## File managed with puppet ##
+## Served by:          '<%= scope.lookupvar('::servername') %>'
+## Module:             '<%= scope.to_hash['module_name'] %>'
+## Template Source:    '<%= template_source %>'
 
 command[check_iostat_sda]=<%= scope.lookupvar('icinga::plugindir') %>/check_iostat -d sda -w 100,100,100 -c 200,200,200
 command[check_iostat_sdb]=<%= scope.lookupvar('icinga::plugindir') %>/check_iostat -d sdb -w 100,100,100 -c 200,200,200

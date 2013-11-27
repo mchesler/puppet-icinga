@@ -1,6 +1,7 @@
-#
-# Managed by Puppet
-#
+## File managed with puppet ##
+## Served by:          '<%= scope.lookupvar('::servername') %>'
+## Module:             '<%= scope.to_hash['module_name'] %>'
+## Template Source:    '<%= template_source %>'
 
 command[check_mysqld_performance_1]=<%= scope.lookupvar('icinga::plugindir') %>/check_mysqld.pl -f -A com_select,com_update,com_insert,com_insert_select,com_commit,com_delete,com_rollback
 command[check_mysqld_performance_2]=<%= scope.lookupvar('icinga::plugindir') %>/check_mysqld.pl -f -A aborted_clients,aborted_connects

@@ -1,30 +1,22 @@
-#
-# Managed by Puppet
-#
-
+## File managed with puppet ##
+## Served by:          '<%= scope.lookupvar('::servername') %>'
+## Module:             '<%= scope.to_hash['module_name'] %>'
+## Template Source:    '<%= template_source %>'
 
 #####################################################################
 # IDO2DB DAEMON CONFIG FILE
 #####################################################################
 
-
-
 # LOCK FILE
 # This is the lockfile that IDO2DB will use to store its PID number
 # in when it is running in daemon mode.
-
 lock_file=/var/icinga/ido2db.lock
-
-
 
 # USER/GROUP PRIVILIGES
 # These options determine the user/group that the daemon should run as.
 # You can specify a number (uid/gid) or a name for either option.
-
 ido2db_user=<%= scope.lookupvar('icinga::server_user') %>
 ido2db_group=<%= scope.lookupvar('icinga::server_group') %>
-
-
 
 # SOCKET TYPE
 # This option determines what type of socket the daemon will create
@@ -32,30 +24,21 @@ ido2db_group=<%= scope.lookupvar('icinga::server_group') %>
 # Value:
 #   unix = Unix domain socket (default)
 #   tcp  = TCP socket
-
 socket_type=unix
 #socket_type=tcp
-
-
 
 # SOCKET NAME
 # This option determines the name and path of the UNIX domain
 # socket that the daemon will create and accept connections from.
 # This option is only valid if the socket type specified above
 # is "unix".
-
 socket_name=/var/icinga/ido.sock
-
-
 
 # TCP PORT
 # This option determines what port the daemon will listen for
 # connections on.  This option is only vlaid if the socket type
 # specified above is "tcp".
-
 tcp_port=5668
-
-
 
 # ENCRYPTION
 # This option determines if the ido2db daemon will accept SSL to encrypt the
@@ -66,16 +49,13 @@ tcp_port=5668
 # option specified above is "tcpsocket".
 #
 # A value of '1' will enable this feature
-
 use_ssl=0
-
-
 
 # DATABASE SERVER TYPE
 # This option determines what type of DB server the daemon should
 # connect to.
 # Values:
-# 	mysql    = MySQL
+# mysql    = MySQL
 #	pgsql    = PostgreSQL
 #	db2      = DB2
 #	firebird = Firebird
@@ -88,19 +68,12 @@ use_ssl=0
 # Currently supported:
 #	libdbi: mysql, pgsql
 #	ocilib: oracle
-
-
 db_servertype=mysql
-
-
 
 # DATABASE HOST
 # This option specifies what host the DB server is running on.
 # Note: Oracle will ignore this setting
-
 db_host=localhost
-
-
 
 # DATABASE PORT
 # This option specifies the port that the DB server is running on.
@@ -110,9 +83,7 @@ db_host=localhost
 #       1521 = Default Oracle port
 #
 # Note: ocilib will ignore this, you have to modify your tnsnames.ora
-
 db_port=3306
-
 
 # DATABASE SOCKET
 # Optional db_socket allows to specify a different socket location.
@@ -120,10 +91,7 @@ db_port=3306
 # PostgeSQL overrides the port, ocilib Oracle ignores this setting.
 #
 # Note: This setting overrules db_port, making it useless!
-
 #db_socket=/var/lib/mysql/mysql.sock
-
-
 
 # DATABASE NAME
 # This option specifies the name of the database that should be used.
@@ -133,10 +101,7 @@ db_port=3306
 # one of the following:
 # 	//DBSERVER/SID
 #	SID
-
 db_name=<%= scope.lookupvar('icinga::idoutils_dbname') %>
-
-
 
 # DATABASE TABLE PREFIX
 # Determines the prefix (if any) that should be prepended to table names.
@@ -145,20 +110,14 @@ db_name=<%= scope.lookupvar('icinga::idoutils_dbname') %>
 #
 # Note: Oracle will ignore this prefix since the tablename length will exceed
 # 30 characters.
-
 db_prefix=icinga_
-
-
 
 # DATABASE USERNAME/PASSWORD
 # This is the username/password that will be used to authenticate to the DB.
 # The user needs at least SELECT, INSERT, UPDATE, and DELETE privileges on
 # the database.
-
 db_user=<%= scope.lookupvar('icinga::idoutils_dbuser') %>
 db_pass=<%= scope.lookupvar('icinga::idoutils_dbpass') %>
-
-
 
 ## TABLE TRIMMING OPTIONS
 # Several database tables containing Icinga event data can become quite large
@@ -199,16 +158,13 @@ max_logentries_age=44640
 # Keep acknowledgements for 31 days
 max_acknowledgements_age=44640
 
-
 ## CLEAN REALTIME TABLES AT CORE STARTUP
 # If you don't want to clean all those tables, set this option to 0.
 # This can be useful if the deletes slow down the normal data
 # processing.
 # Values: 0 - don't clean
 #         1 - clean (default)
-
 clean_realtime_tables_on_core_startup=1
-
 
 ## CLEAN CONFIG TABLES AT CORE STARTUP
 # If you don't want to clean all those tables, set this option to 0.
@@ -218,9 +174,7 @@ clean_realtime_tables_on_core_startup=1
 # or any other tables not directly linked to the objects table.
 # Values: 0 - don't clean
 #         1 - clean (default)
-
 clean_config_tables_on_core_startup=1
-
 
 # ***EXPERIMENTAL*** DB TRIMMING INTERVAL
 # ido2db default db trimming interval is set to 3600 SECONDS.
@@ -228,19 +182,14 @@ clean_config_tables_on_core_startup=1
 # highly experimental!!!
 # Modify at your own risk to set the interval DB trimming interval
 # to an appropriate value. If left blank, it defaults to 3600 seconds.
-
 trim_db_interval=3600
-
 
 # DB TRIMMING THREAD DELAY ON STARTUP
 # ido2db spawns a thread for parallel db trimming. This option can be
 # modified to extend/minimize the initial wait delay at startup.
 # Default is set to 300 seconds in order to allow startup routines.
 # 300 seconds is also the minimum value, lower ones will be overwritten.
-
 housekeeping_thread_startup_delay=300
-
-
 
 # DEBUG LEVEL
 # This option determines how much (if any) debugging information will
@@ -250,27 +199,18 @@ housekeeping_thread_startup_delay=300
 #          0 = Nothing
 #          1 = Process info
 #	   2 = SQL queries
-
 debug_level=0
-
-
 
 # DEBUG VERBOSITY
 # This option determines how verbose the debug log out will be.
 # Values: 0 = Brief output
 #         1 = More detailed
 #         2 = Very detailed
-
-debug_verbosity=1
-
-
+debug_verbosity=2
 
 # DEBUG FILE
 # This option determines where the daemon should write debugging information.
-
 debug_file=/var/icinga/ido2db.debug
-
-
 
 # MAX DEBUG FILE SIZE
 # This option determines the maximum size (in bytes) of the debug file.  If
@@ -278,23 +218,19 @@ debug_file=/var/icinga/ido2db.debug
 # extension.  If a file already exists with a .old extension it will
 # automatically be deleted.  This helps ensure your disk space usage doesn't
 # get out of control when debugging.
-
 # 100M
 max_debug_file_size=100000000
-
-
 
 # OCI ERRORS TO SYSLOG
 # ido2db registers an error handler in ocilib which spits all msg
 # into debug and syslog by default. Setting this option to 0,
 # syslog output will be disabled, only debug log will be used (if
 # appropriate debug_level is set).
-
 oci_errors_to_syslog=1
 
 # ORACLE TRACE LEVEL
 # This setting activates oracle session trace for each ido2db connection using trace event
-# Level value must be one of the currently supported values (1,4,8,12) or 0 for off 
+# Level value must be one of the currently supported values (1,4,8,12) or 0 for off
 # this requires explicit "alter session" privilege
 # select rights to v$session and v$process are recommanded
 # 0 - pseudo level TRACE OFF
@@ -302,6 +238,4 @@ oci_errors_to_syslog=1
 # 4 – Bind variables only
 # 8 – Wait events only
 # 12 – Bind Variables and Wait Events
-
 oracle_trace_level=0
-

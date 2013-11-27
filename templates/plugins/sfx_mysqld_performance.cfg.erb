@@ -1,6 +1,7 @@
-#
-# Managed by Puppet
-#
+## File managed with puppet ##
+## Served by:          '<%= scope.lookupvar('::servername') %>'
+## Module:             '<%= scope.to_hash['module_name'] %>'
+## Template Source:    '<%= template_source %>'
 
 # check_mysqld.pl -f -A table_locks_immediate,table_locks_waited -u root -p 1q2w3e4r -P 3310 -F /exlibris/sfx_ver/sfx4_1/data/my.cnf
 

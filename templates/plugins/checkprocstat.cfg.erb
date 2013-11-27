@@ -1,5 +1,6 @@
-#
-# Managed by Puppet
-#
+## File managed with puppet ##
+## Served by:          '<%= scope.lookupvar('::servername') %>'
+## Module:             '<%= scope.to_hash['module_name'] %>'
+## Template Source:    '<%= template_source %>'
 
 command[check_procstat]=<%= scope.lookupvar('icinga::plugindir') %>/check_linux-procstat.pl -f

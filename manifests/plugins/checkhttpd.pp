@@ -41,7 +41,7 @@ class icinga::plugins::checkhttpd (
         owner   => $::icinga::client_user,
         group   => $::icinga::client_group,
         notify  => Service[$icinga::service_client],
-        content => template('icinga/plugins/httpd_performance.cfg');
+        content => template('icinga/plugins/httpd_performance.cfg.erb');
     }
 
     @@nagios_service { "check_httpd_perf_${::fqdn}":

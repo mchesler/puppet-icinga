@@ -1,6 +1,7 @@
-#
-## Managed by Puppet
-#
+## File managed with puppet ##
+## Served by:          '<%= scope.lookupvar('::servername') %>'
+## Module:             '<%= scope.to_hash['module_name'] %>'
+## Template Source:    '<%= template_source %>'
 
 command[check_mem]=<%= scope.lookupvar('icinga::plugindir') %>/check_mem -w 90,25 -c 95,50
 command[check_total_procs]=<%= scope.lookupvar('icinga::plugindir') %>/check_procs -w 200 -c 250

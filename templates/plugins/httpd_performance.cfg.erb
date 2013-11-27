@@ -3,4 +3,4 @@
 ## Module:             '<%= scope.to_hash['module_name'] %>'
 ## Template Source:    '<%= template_source %>'
 
-command[check_sfx_httpd_performance]=<%= scope.lookupvar('icinga::plugindir') %>/check_apache-auto.pl -H localhost
+command[check_httpd_performance]=<%= scope.lookupvar('icinga::plugindir') %>/check_apache-auto.pl -H localhost

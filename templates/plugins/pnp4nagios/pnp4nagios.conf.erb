@@ -1,6 +1,7 @@
-#
-# Managed by Puppet
-#
+## File managed with puppet ##
+## Served by:          '<%= scope.lookupvar('::servername') %>'
+## Module:             '<%= scope.to_hash['module_name'] %>'
+## Template Source:    '<%= template_source %>'
 
 Alias /pnp4nagios "<%= scope.lookupvar('::icinga::plugins::pnp4nagios::config::htmldir') %>/"
 
@@ -18,7 +19,7 @@ Alias /pnp4nagios "<%= scope.lookupvar('::icinga::plugins::pnp4nagios::config::h
   AuthType Basic
   AuthUserFile <%= scope.lookupvar('::icinga::htpasswd_file') %>
   Require valid-user
-  <% end %> 
+  <% end %>
 
   <IfModule mod_rewrite.c>
     # Turn on URL rewriting
