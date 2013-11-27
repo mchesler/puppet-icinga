@@ -6,7 +6,7 @@ class icinga::params {
   $manage_repo                 = false
   $client                      = true
   $server                      = false
-  $use_auth                    = true
+  $use_auth                    = 'ldap'
   $plugins                     = [ 'checkpuppet' ]
   $nrpe_allowed_hosts          = [ '127.0.0.1,', $::ipaddress ]
   $nrpe_server_address         = $::ipaddress
