@@ -5,9 +5,9 @@
 class icinga::plugins::checkhttpd (
   $ensure                = present,
   $perfdata              = false,
-  $max_check_attempts    = $::icinga::max_check_attempts,
-  $notification_period   = $::icinga::notification_period,
-  $notifications_enabled = $::icinga::notifications_enabled,
+  $max_check_attempts    = $icinga::max_check_attempts,
+  $notification_period   = $icinga::notification_period,
+  $notifications_enabled = $icinga::notifications_enabled,
 ) inherits icinga {
 
   $pkg_perl_libwww_perl = $::operatingsystem ? {
@@ -29,17 +29,17 @@ class icinga::plugins::checkhttpd (
       notify => Service[$icinga::service_client];
   }
 
-  file{"${::icinga::plugindir}/check_apache-auto.pl":
+  file{"${icinga::plugindir}/check_apache-auto.pl":
     seltype => 'nagios_services_plugin_exec_t',
     require => Package[$pkg_nagios_plugins_httpd],
   }
 
   if $perfdata {
     file {
-      "${::icinga::includedir_client}/httpd_performance.cfg":
+      "${icinga::includedir_client}/httpd_performance.cfg":
         ensure  => $ensure,
-        owner   => $::icinga::client_user,
-        group   => $::icinga::client_group,
+        owner   => $icinga::client_user,
+        group   => $icinga::client_group,
         notify  => Service[$icinga::service_client],
         content => template('icinga/plugins/httpd_performance.cfg.erb');
     }
@@ -52,7 +52,7 @@ class icinga::plugins::checkhttpd (
       notification_period   => $notification_period,
       notifications_enabled => $notifications_enabled,
       action_url            => '/pnp4nagios/graph?host=$HOSTNAME$&srv=$SERVICEDESC$',
-      target                => "${::icinga::targetdir}/services/${::fqdn}.cfg",
+      target                => "${icinga::targetdir}/services/${::fqdn}.cfg",
     }
   }
 }

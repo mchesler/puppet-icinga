@@ -25,7 +25,7 @@ define icinga::downtime(
 ) {
 
   concat::fragment{"$name":
-    target  => "$::icinga::confdir_server/downtime.cfg",
+    target  => "$icinga::confdir_server/downtime.cfg",
     order   => 10,
     content => template('icinga/common/downtime.cfg.erb'),
   }

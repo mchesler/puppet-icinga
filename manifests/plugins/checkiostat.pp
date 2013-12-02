@@ -18,7 +18,7 @@ class icinga::plugins::checkiostat {
   }
 
   file {
-    "${::icinga::includedir_client}/iostat.cfg":
+    "${icinga::includedir_client}/iostat.cfg":
       ensure  => present,
       notify  => Service[$icinga::service_client],
       require => Package[$package_name],

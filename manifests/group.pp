@@ -7,12 +7,12 @@ define icinga::group (
   $members              = undef,
   $contactgroup_members = undef,
   $contactgroup_name    = $name,
-  $target               = $::icinga::targetdir_contacts
+  $target               = $icinga::targetdir_contacts
 ) {
-  $owner = $::icinga::server_user
-  $group = $::icinga::server_group
+  $owner = $icinga::server_user
+  $group = $icinga::server_group
 
-  if $::icinga::server {
+  if $icinga::server {
     @@nagios_contactgroup { $name:
       ensure               => $ensure,
       contactgroup_name    => $contactgroup_name,

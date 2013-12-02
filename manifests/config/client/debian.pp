@@ -3,23 +3,23 @@
 # This class provides client configuration for Debian and derivative distro's.
 #
 class icinga::config::client::debian {
-  if $::icinga::client {
+  if $icinga::client {
     File {
       owner   => 'root',
       group   => 'root',
-      notify  => Service[$::icinga::service_client],
+      notify  => Service[$icinga::service_client],
       require => Class['icinga::install'],
     }
 
     file {
-      $::icinga::confdir_client:
+      $icinga::confdir_client:
         ensure  => directory,
         recurse => true;
 
-      $::icinga::plugindir:
+      $icinga::plugindir:
         ensure  => directory;
 
-      "${::icinga::confdir_client}/nrpe.cfg":
+      "${icinga::confdir_client}/nrpe.cfg":
         ensure  => present,
         content => template ('icinga/debian/nrpe.cfg.erb');
     }

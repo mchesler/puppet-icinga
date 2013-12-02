@@ -3,9 +3,9 @@
 # This class provides server configuration.
 #
 class icinga::config::server {
-  if $::icinga::server {
+  if $icinga::server {
 
-    include ::icinga::config::server::common
+    include icinga::config::server::common
 
     case $::operatingsystem {
       'Debian', 'Ubuntu': {
@@ -24,30 +24,30 @@ class icinga::config::server {
     @group { 'nagios':
       ensure  => present,
       members => [
-        $::icinga::server_group,
-        $::icinga::webserver_group
+        $icinga::server_group,
+        $icinga::webserver_group
       ];
     }
 
     @group { 'icinga':
       ensure  => present,
       members => [
-        $::icinga::server_group,
-        $::icinga::webserver_group
+        $icinga::server_group,
+        $icinga::webserver_group
       ];
     }
 
     @group { 'icingacmd':
       ensure  => present,
       members => [
-        $::icinga::server_group,
-        $::icinga::webserver_group
+        $icinga::server_group,
+        $icinga::webserver_group
       ];
     }
 
-    realize Group[$::icinga::server_cmd_group]
+    realize Group[$icinga::server_cmd_group]
 
-    include ::icinga::default::hostgroups
-    include ::icinga::default::timeperiods
+    include icinga::default::hostgroups
+    include icinga::default::timeperiods
   }
 }

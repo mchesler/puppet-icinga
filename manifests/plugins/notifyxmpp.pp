@@ -13,7 +13,7 @@ class icinga::plugins::notifyxmpp (
   require ::icinga
 
   if $icinga::server {
-    file { "${::icinga::plugindir}/notify_via_jabber":
+    file { "${icinga::plugindir}/notify_via_jabber":
       ensure  => present,
       mode    => '0755',
       owner   => 'root',
@@ -26,13 +26,13 @@ class icinga::plugins::notifyxmpp (
     @@nagios_command{'notify-by-xmpp':
       ensure       => present,
       command_line => '$USER1$/notify_via_jabber "$NOTIFICATIONTYPE$ $HOSTNAME$ $SERVICEDESC$ $SERVICESTATE$ $SERVICEOUTPUT$ $LONGDATETIME$" $CONTACTPAGER$',
-      target       => "${::icinga::targetdir}/commands/puppet-notify-by-xmpp.cfg",
+      target       => "${icinga::targetdir}/commands/puppet-notify-by-xmpp.cfg",
     }
 
     @@nagios_command{'host-notify-by-xmpp':
       ensure       => present,
       command_line => '$USER1$/notify_via_jabber "Host \'$HOSTALIAS$\' is $HOSTSTATE$ - Info : $HOSTOUTPUT$" $CONTACTPAGER$',
-      target       => "${::icinga::targetdir}/commands/puppet-notify-by-xmpp.cfg",
+      target       => "${icinga::targetdir}/commands/puppet-notify-by-xmpp.cfg",
     }
   }
 }

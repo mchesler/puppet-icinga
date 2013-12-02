@@ -5,9 +5,9 @@
 class icinga::plugins::checkmysqld (
   $ensure                = present,
   $perfdata              = true,
-  $max_check_attempts    = $::icinga::max_check_attempts,
-  $notification_period   = $::icinga::notification_period,
-  $notifications_enabled = $::icinga::notifications_enabled,
+  $max_check_attempts    = $icinga::max_check_attempts,
+  $notification_period   = $icinga::notification_period,
+  $notifications_enabled = $icinga::notifications_enabled,
 ) inherits icinga {
 
   $pkg_nagios_plugins_mysqld = $::operatingsystem ? {
@@ -34,13 +34,13 @@ class icinga::plugins::checkmysqld (
     service_description => 'mysqld',
     host_name           => $::fqdn,
     max_check_attempts  => $max_check_attempts,
-    target              => "${::icinga::targetdir}/services/${::fqdn}.cfg",
+    target              => "${icinga::targetdir}/services/${::fqdn}.cfg",
     action_url          => '/pnp4nagios/graph?host=$HOSTNAME$&srv=$SERVICEDESC$',
   }
 
   if $perfdata {
     file {
-      "${::icinga::includedir_client}/mysqld_performance.cfg":
+      "${icinga::includedir_client}/mysqld_performance.cfg":
         ensure  => $ensure,
         notify  => Service[$icinga::service_client],
         content => template('icinga/plugins/mysqld_performance.cfg.erb');
@@ -51,7 +51,7 @@ class icinga::plugins::checkmysqld (
       max_check_attempts    => $max_check_attempts,
       notification_period   => $notification_period,
       notifications_enabled => $notifications_enabled,
-      target                => "${::icinga::targetdir}/services/${::fqdn}.cfg",
+      target                => "${icinga::targetdir}/services/${::fqdn}.cfg",
     }
 
     @@nagios_service { "check_mysqld_performance_1_${::fqdn}":

@@ -5,19 +5,19 @@
 class icinga::plugins::checkalldisks (
   $check_warning         = '10%',
   $check_critical        = '5%',
-  $max_check_attempts    = $::icinga::max_check_attempts,
-  $notification_period   = $::icinga::notification_period,
-  $notifications_enabled = $::icinga::notifications_enabled,
+  $max_check_attempts    = $icinga::max_check_attempts,
+  $notification_period   = $icinga::notification_period,
+  $notifications_enabled = $icinga::notifications_enabled,
 ) inherits icinga {
 
   if $icinga::client {
-    file{"${::icinga::includedir_client}/all_disks.cfg":
+    file{"${icinga::includedir_client}/all_disks.cfg":
       ensure  => 'file',
       mode    => '0644',
-      owner   => $::icinga::client_user,
-      group   => $::icinga::client_group,
-      content => "command[check_all_disks]=sudo ${::icinga::plugindir}/check_disk -w ${check_warning} -c ${check_critical}\n",
-      notify  => Service[$::icinga::service_client],
+      owner   => $icinga::client_user,
+      group   => $icinga::client_group,
+      content => "command[check_all_disks]=sudo ${icinga::plugindir}/check_disk -w ${check_warning} -c ${check_critical}\n",
+      notify  => Service[$icinga::service_client],
     }
 
     @@nagios_service { "check_all_disks_${::fqdn}":
@@ -27,7 +27,7 @@ class icinga::plugins::checkalldisks (
       max_check_attempts    => $max_check_attempts,
       notification_period   => $notification_period,
       notifications_enabled => $notifications_enabled,
-      target                => "${::icinga::targetdir}/services/${::fqdn}.cfg",
+      target                => "${icinga::targetdir}/services/${::fqdn}.cfg",
       action_url            => '/pnp4nagios/graph?host=$HOSTNAME$&srv=$SERVICEDESC$',
     }
   }

@@ -8,8 +8,8 @@ define icinga::plugins::checkdrupalcron (
     'centos' => 'nagios-plugins-drupalcron',
     'debian' => 'nagios-plugin-drupalcron',
   },
-  $notification_period    = $::icinga::notification_period,
-  $notifications_enabled  = $::icinga::notifications_enabled,
+  $notification_period    = $icinga::notification_period,
+  $notifications_enabled  = $icinga::notifications_enabled,
   $host_name              = $::fqdn,
   $warning                = '3600',
   $critical               = '7200',
@@ -27,13 +27,13 @@ define icinga::plugins::checkdrupalcron (
       }
     }
 
-    file{"${::icinga::includedir_client}/check_drupal_cron_${title}.cfg":
+    file{"${icinga::includedir_client}/check_drupal_cron_${title}.cfg":
       ensure  => 'file',
       mode    => '0644',
-      owner   => $::icinga::client_user,
-      group   => $::icinga::client_group,
-      content => "command[check_drupal_cron_${title}]=sudo ${::icinga::plugindir}/check_drupal_cron -u ${uri} -r ${root} -w ${warning} -c ${critical}\n",
-      notify  => Service[$::icinga::service_client],
+      owner   => $icinga::client_user,
+      group   => $icinga::client_group,
+      content => "command[check_drupal_cron_${title}]=sudo ${icinga::plugindir}/check_drupal_cron -u ${uri} -r ${root} -w ${warning} -c ${critical}\n",
+      notify  => Service[$icinga::service_client],
     }
 
     @@nagios_service{"check_drupal_cron_${host_name}_${title}":
@@ -43,7 +43,7 @@ define icinga::plugins::checkdrupalcron (
       use                   => 'generic-service',
       notification_period   => $notification_period,
       notifications_enabled => $notifications_enabled,
-      target                => "${::icinga::targetdir}/services/${host_name}.cfg",
+      target                => "${icinga::targetdir}/services/${host_name}.cfg",
     }
   }
 }

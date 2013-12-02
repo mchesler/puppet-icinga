@@ -7,9 +7,9 @@ class icinga::plugins::checkmailq (
   $check_warning         = '5',
   $check_critical        = '10',
   $mailserver_type       = 'postfix',
-  $max_check_attempts    = $::icinga::max_check_attempts,
-  $notification_period   = $::icinga::notification_period,
-  $notifications_enabled = $::icinga::notifications_enabled,
+  $max_check_attempts    = $icinga::max_check_attempts,
+  $notification_period   = $icinga::notification_period,
+  $notifications_enabled = $icinga::notifications_enabled,
 ) inherits icinga {
 
   if $icinga::client {
@@ -19,13 +19,13 @@ class icinga::plugins::checkmailq (
       }
     }
 
-    file{"${::icinga::includedir_client}/mailq.cfg":
+    file{"${icinga::includedir_client}/mailq.cfg":
       ensure  => 'file',
       mode    => '0644',
-      owner   => $::icinga::client_user,
-      group   => $::icinga::client_group,
-      content => "command[check_mailq]=sudo ${::icinga::plugindir}/check_mailq -w ${check_warning} -c ${check_critical} -M ${mailserver_type}\n",
-      notify  => Service[$::icinga::service_client],
+      owner   => $icinga::client_user,
+      group   => $icinga::client_group,
+      content => "command[check_mailq]=sudo ${icinga::plugindir}/check_mailq -w ${check_warning} -c ${check_critical} -M ${mailserver_type}\n",
+      notify  => Service[$icinga::service_client],
     }
 
     @@nagios_service { "check_mailq_${::fqdn}":
@@ -35,7 +35,7 @@ class icinga::plugins::checkmailq (
       max_check_attempts    => $max_check_attempts,
       notification_period   => $notification_period,
       notifications_enabled => $notifications_enabled,
-      target                => "${::icinga::targetdir}/services/${::fqdn}.cfg",
+      target                => "${icinga::targetdir}/services/${::fqdn}.cfg",
     }
   }
 

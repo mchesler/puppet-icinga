@@ -4,15 +4,15 @@
 #
 class icinga::plugins::pnp4nagios::config {
   File {
-    owner   => $::icinga::server_user,
-    group   => $::icinga::server_group,
+    owner   => $icinga::server_user,
+    group   => $icinga::server_group,
     require => [
       Class['icinga::config'],
       Class['icinga::plugins::pnp4nagios::install'],
     ],
     notify  => [
-      Service[$::icinga::service_server],
-      Service[$::icinga::service_webserver],
+      Service[$icinga::service_server],
+      Service[$icinga::service_webserver],
     ]
   }
 
@@ -59,11 +59,11 @@ class icinga::plugins::pnp4nagios::config {
       ensure => directory;
 
     $vhost:
-      ensure  => $::icinga::plugins::pnp4nagios::ensure,
+      ensure  => $icinga::plugins::pnp4nagios::ensure,
       content => template('icinga/plugins/pnp4nagios/pnp4nagios.conf.erb');
 
-    "${::icinga::targetdir}/commands-perfdata.cfg":
-      ensure  => $::icinga::plugins::pnp4nagios::ensure,
+    "${icinga::targetdir}/commands-perfdata.cfg":
+      ensure  => $icinga::plugins::pnp4nagios::ensure,
       content => template('icinga/plugins/pnp4nagios/commands-perfdata.cfg.erb');
   }
 }

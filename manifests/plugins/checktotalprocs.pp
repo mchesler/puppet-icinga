@@ -5,8 +5,8 @@
 class icinga::plugins::checktotalprocs (
   $check_warning         = '',
   $check_critical        = '',
-  $notification_period   = $::icinga::notification_period,
-  $notifications_enabled = $::icinga::notifications_enabled,
+  $notification_period   = $icinga::notification_period,
+  $notifications_enabled = $icinga::notifications_enabled,
 ) inherits icinga {
 
   if $icinga::client {
@@ -15,7 +15,7 @@ class icinga::plugins::checktotalprocs (
       service_description   => 'Total processes',
       notification_period   => $notification_period,
       notifications_enabled => $notifications_enabled,
-      target                => "${::icinga::targetdir}/services/${::fqdn}.cfg",
+      target                => "${icinga::targetdir}/services/${::fqdn}.cfg",
     }
   }
 

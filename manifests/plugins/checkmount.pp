@@ -2,9 +2,9 @@ define icinga::plugins::checkmount (
   $pkgname                = 'nagios-plugins-mount',
   $mountpoint             = undef,
   $type                   = undef,
-  $max_check_attempts    = $::icinga::params::max_check_attempts,
-  $notification_period   = $::icinga::notification_period,
-  $notifications_enabled = $::icinga::notifications_enabled,
+  $max_check_attempts    = $icinga::params::max_check_attempts,
+  $notification_period   = $icinga::notification_period,
+  $notifications_enabled = $icinga::notifications_enabled,
 ) {
 
   require ::icinga
@@ -20,13 +20,13 @@ define icinga::plugins::checkmount (
     $type_option = " -t ${type}"
   }
 
-  file{"${::icinga::includedir_client}/mount${sanitized_mount}.cfg":
+  file{"${icinga::includedir_client}/mount${sanitized_mount}.cfg":
     ensure  => 'file',
     mode    => '0644',
-    owner   => $::icinga::client_user,
-    group   => $::icinga::client_group,
-    notify  => Service[$::icinga::service_client],
-    content => "command[check_mount${sanitized_mount}]=${::icinga::plugindir}/check_mount.pl -m ${mountpoint}${type_option}\n",
+    owner   => $icinga::client_user,
+    group   => $icinga::client_group,
+    notify  => Service[$icinga::service_client],
+    content => "command[check_mount${sanitized_mount}]=${icinga::plugindir}/check_mount.pl -m ${mountpoint}${type_option}\n",
   }
 
   @@nagios_service{"check_mount_${mountpoint}_${::fqdn}":
@@ -36,7 +36,7 @@ define icinga::plugins::checkmount (
     max_check_attempts    => $max_check_attempts,
     notification_period   => $notification_period,
     notifications_enabled => $notifications_enabled,
-    target                => "${::icinga::targetdir}/services/${::fqdn}.cfg",
+    target                => "${icinga::targetdir}/services/${::fqdn}.cfg",
   }
 
 }

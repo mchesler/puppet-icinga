@@ -4,9 +4,9 @@
 #
 class icinga::plugins::checkprocstat (
   $ensure                = present,
-  $max_check_attempts    = $::icinga::max_check_attempts,
-  $notification_period   = $::icinga::notification_period,
-  $notifications_enabled = $::icinga::notifications_enabled,
+  $max_check_attempts    = $icinga::max_check_attempts,
+  $notification_period   = $icinga::notification_period,
+  $notifications_enabled = $icinga::notifications_enabled,
 ) inherits icinga {
 
   $package_name = $::operatingsystem ? {
@@ -19,7 +19,7 @@ class icinga::plugins::checkprocstat (
   }
 
   file {
-    "${::icinga::includedir_client}/checkprocstat.cfg":
+    "${icinga::includedir_client}/checkprocstat.cfg":
       ensure  => $ensure,
       notify  => Service[$icinga::service_client],
       content => template('icinga/plugins/checkprocstat.cfg.erb');
@@ -33,7 +33,7 @@ class icinga::plugins::checkprocstat (
     notification_period   => $notification_period,
     notifications_enabled => $notifications_enabled,
     action_url            => '/pnp4nagios/graph?host=$HOSTNAME$&srv=$SERVICEDESC$',
-    target                => "${::icinga::targetdir}/services/${::fqdn}.cfg",
+    target                => "${icinga::targetdir}/services/${::fqdn}.cfg",
   }
 }
 

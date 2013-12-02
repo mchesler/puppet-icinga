@@ -10,8 +10,8 @@ define icinga::plugins::checklengthydrupalcron (
     'centos' => 'nagios-plugins-procs',
     'debian' => 'nagios-plugins-basic',
   },
-  $notification_period    = $::icinga::notification_period,
-  $notifications_enabled  = $::icinga::notifications_enabled,
+  $notification_period    = $icinga::notification_period,
+  $notifications_enabled  = $icinga::notifications_enabled,
   $host_name              = $::fqdn,
   $warning                = '1800',
   $critical               = '3600',
@@ -27,13 +27,13 @@ define icinga::plugins::checklengthydrupalcron (
       }
     }
 
-    file{"${::icinga::includedir_client}/check_lengthy_drupal_cron_${host_name}.cfg":
+    file{"${icinga::includedir_client}/check_lengthy_drupal_cron_${host_name}.cfg":
       ensure  => 'file',
       mode    => '0644',
-      owner   => $::icinga::client_user,
-      group   => $::icinga::client_group,
-      content => "command[check_lengthy_drupal_cron_${host_name}]=${::icinga::plugindir}/check_procs -m ELAPSED -a /cron.php -w ${warning} -c ${critical}\n",
-      notify  => Service[$::icinga::service_client],
+      owner   => $icinga::client_user,
+      group   => $icinga::client_group,
+      content => "command[check_lengthy_drupal_cron_${host_name}]=${icinga::plugindir}/check_procs -m ELAPSED -a /cron.php -w ${warning} -c ${critical}\n",
+      notify  => Service[$icinga::service_client],
     }
 
     @@nagios_service{"check_lengthy_drupal_cron_${host_name}_${host_name}":
@@ -43,7 +43,7 @@ define icinga::plugins::checklengthydrupalcron (
       use                   => 'generic-service',
       notification_period   => $notification_period,
       notifications_enabled => $notifications_enabled,
-      target                => "${::icinga::targetdir}/services/${host_name}.cfg",
+      target                => "${icinga::targetdir}/services/${host_name}.cfg",
     }
   }
 }

@@ -3,9 +3,9 @@
 ## Module:             '<%= scope.to_hash['module_name'] %>'
 ## Template Source:    '<%= template_source %>'
 
-Alias /pnp4nagios "<%= scope.lookupvar('::icinga::plugins::pnp4nagios::config::htmldir') %>/"
+Alias /pnp4nagios "<%= scope.lookupvar('icinga::plugins::pnp4nagios::config::htmldir') %>/"
 
-<Directory "<%= scope.lookupvar('::icinga::plugins::pnp4nagios::config::htmldir') %>/">
+<Directory "<%= scope.lookupvar('icinga::plugins::pnp4nagios::config::htmldir') %>/">
   AllowOverride None
   Order allow,deny
   Allow from all
@@ -14,10 +14,10 @@ Alias /pnp4nagios "<%= scope.lookupvar('::icinga::plugins::pnp4nagios::config::h
   #
   #
   #
-  <% if scope.lookupvar('::icinga::use_auth') %>
+  <% if scope.lookupvar('icinga::use_auth') %>
   AuthName "Icinga Access"
   AuthType Basic
-  AuthUserFile <%= scope.lookupvar('::icinga::htpasswd_file') %>
+  AuthUserFile <%= scope.lookupvar('icinga::htpasswd_file') %>
   Require valid-user
   <% end %>
 

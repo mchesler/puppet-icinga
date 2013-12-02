@@ -5,9 +5,9 @@
 define icinga::plugins::checkdns (
   $dnsname               = $name,
   $expected_answer,
-  $notification_period   = $::icinga::notification_period,
-  $max_check_attempts    = $::icinga::max_check_attempts,
-  $notifications_enabled = $::icinga::notifications_enabled,
+  $notification_period   = $icinga::notification_period,
+  $max_check_attempts    = $icinga::max_check_attempts,
+  $notifications_enabled = $icinga::notifications_enabled,
 ) {
 
   require ::icinga
@@ -20,7 +20,7 @@ define icinga::plugins::checkdns (
       notification_period   => $notification_period,
       max_check_attempts    => $max_check_attempts,
       notifications_enabled => $notifications_enabled,
-      target                => "${::icinga::targetdir}/services/${::fqdn}.cfg",
+      target                => "${icinga::targetdir}/services/${::fqdn}.cfg",
     }
   }
 

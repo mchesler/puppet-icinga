@@ -6,10 +6,10 @@
       host_name           => $::fqdn,
       use                 => 'generic-service',
       notification_period => '24x7',
-      target              => "${::icinga::targetdir}/services/${::fqdn}.cfg",
+      target              => "${icinga::targetdir}/services/${::fqdn}.cfg",
       action_url          => '/pnp4nagios/graph?host=$HOSTNAME$&srv=$SERVICEDESC$',
     }
-    
+
     Nagios_contact {
       ensure                        => present,
       use                           => 'generic-contact',
@@ -17,7 +17,7 @@
       service_notification_period   => '24x7',
       service_notification_commands => 'notify-service-by-email',
       host_notification_commands    => 'notify-host-by-email',
-      target                        => "${::icinga::targetdir}/contacts/contacts.cfg",
+      target                        => "${icinga::targetdir}/contacts/contacts.cfg",
       can_submit_commands           => '1',
     }
 
@@ -26,7 +26,7 @@
     node client {
       class { 'icinga': }
     }
-    
+
     node server {
       class {
         'icinga':
@@ -35,14 +35,14 @@
           icinga_admins => [ 'admin,', 'dummy1,', 'dummy2' ],
           plugins       => [ 'checkpuppet', 'pnp4nagios' ];
       }
-    
+
       icinga::user {
         'dummy1':
           ensure   => present,
           password => 'default',
           email    => 'dummy1@example.com',
           pager    => '320000001';
-    
+
         'dummy2':
           ensure   => present,
           password => 'default'
@@ -50,7 +50,7 @@
           pager    => '320000002';
       }
     }
-    
+
 ### Inside your existing modules
 
     @@nagios_service { "check_tcp_123_${::fqdn}":
@@ -83,8 +83,8 @@ A Debian mirror is currently not available yet. Building your own packages is ve
 
   * Needs proper testing
   * Using multiple Icinga servers with identical usernames you might run into the error below:
- 
-    err: Failed to apply catalog: Cannot alias Nagios_contact[icinga.example.org-someuser] 
+
+    err: Failed to apply catalog: Cannot alias Nagios_contact[icinga.example.org-someuser]
     to ["someuser"] at /etc/puppet/environments/refactor/modules/icinga/manifests/user.pp:48;
     resource ["Nagios_contact", "someuser"] already declared
 

@@ -7,8 +7,8 @@ define icinga::plugins::checkbacula (
   $jobname               = $::fqdn,
   $warning               = '1',
   $critical              = '0',
-  $notification_period   = $::icinga::notification_period,
-  $notifications_enabled = $::icinga::notifications_enabled,
+  $notification_period   = $icinga::notification_period,
+  $notifications_enabled = $icinga::notifications_enabled,
 ) {
 
   require ::icinga
@@ -20,13 +20,13 @@ define icinga::plugins::checkbacula (
       }
     }
 
-    file{"${::icinga::includedir_client}/bacula_${jobname}.cfg":
+    file{"${icinga::includedir_client}/bacula_${jobname}.cfg":
       ensure  => 'file',
       mode    => '0644',
-      owner   => $::icinga::client_user,
-      group   => $::icinga::client_group,
-      content => "command[check_bacula_${jobname}]=${::icinga::plugindir}/check_bacula -j ${jobname} -w ${warning} -c ${critical}\n",
-      notify  => Service[$::icinga::service_client],
+      owner   => $icinga::client_user,
+      group   => $icinga::client_group,
+      content => "command[check_bacula_${jobname}]=${icinga::plugindir}/check_bacula -j ${jobname} -w ${warning} -c ${critical}\n",
+      notify  => Service[$icinga::service_client],
     }
 
     @@nagios_service{"check_bacula_${jobname}":
@@ -36,7 +36,7 @@ define icinga::plugins::checkbacula (
       use                   => 'generic-service',
       notification_period   => $notification_period,
       notifications_enabled => $notifications_enabled,
-      target                => "${::icinga::targetdir}/services/${::fqdn}.cfg",
+      target                => "${icinga::targetdir}/services/${::fqdn}.cfg",
     }
   }
 

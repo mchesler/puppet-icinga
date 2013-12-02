@@ -4,9 +4,9 @@
 #
 class icinga::plugins::checkiostatdisk (
   $disk                  = $name,
-  $max_check_attempts    = $::icinga::max_check_attempts,
-  $notification_period   = $::icinga::notification_period,
-  $notifications_enabled = $::icinga::notifications_enabled,
+  $max_check_attempts    = $icinga::max_check_attempts,
+  $notification_period   = $icinga::notification_period,
+  $notifications_enabled = $icinga::notifications_enabled,
 ) inherits icinga {
   @@nagios_service { "check_iostat_${disk}_${::fqdn}":
     check_command         => "check_nrpe_command!check_iostat_${disk}",
@@ -16,7 +16,7 @@ class icinga::plugins::checkiostatdisk (
     notification_period   => $notification_period,
     notifications_enabled => $notifications_enabled,
     action_url            => '/pnp4nagios/graph?host=$HOSTNAME$&srv=$SERVICEDESC$',
-    target                => "${::icinga::targetdir}/services/${::fqdn}.cfg",
+    target                => "${icinga::targetdir}/services/${::fqdn}.cfg",
   }
 }
 

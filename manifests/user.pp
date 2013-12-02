@@ -11,22 +11,22 @@ define icinga::user (
   $hash                          = undef,
   $pager                         = undef,
   $password,
-  $host_notification_commands    = $::icinga::notification_cmd_host,
-  $host_notification_period      = $::icinga::notification_period,
-  $host_notifications_enabled    = $::icinga::notification_host_enable,
-  $host_notification_options     = $::icinga::notification_host_opts,
-  $service_notification_commands = $::icinga::notification_cmd_service,
-  $service_notification_period   = $::icinga::notification_period,
-  $service_notifications_enabled = $::icinga::notification_service_enable,
-  $service_notification_options  = $::icinga::notification_service_opts,
-  $target                        = $::icinga::targetdir_contacts
+  $host_notification_commands    = $icinga::notification_cmd_host,
+  $host_notification_period      = $icinga::notification_period,
+  $host_notifications_enabled    = $icinga::notification_host_enable,
+  $host_notification_options     = $icinga::notification_host_opts,
+  $service_notification_commands = $icinga::notification_cmd_service,
+  $service_notification_period   = $icinga::notification_period,
+  $service_notifications_enabled = $icinga::notification_service_enable,
+  $service_notification_options  = $icinga::notification_service_opts,
+  $target                        = $icinga::targetdir_contacts
 ) {
-  $htpasswd = $::icinga::htpasswd_file
-  $owner    = $::icinga::server_user
-  $group    = $::icinga::server_group
-  $service  = $::icinga::service_server
+  $htpasswd = $icinga::htpasswd_file
+  $owner    = $icinga::server_user
+  $group    = $icinga::server_group
+  $service  = $icinga::service_server
 
-  if $::icinga::server {
+  if $icinga::server {
     Exec {
       require => File[$htpasswd],
       notify  => Service[$service],
@@ -38,7 +38,7 @@ define icinga::user (
           exec { "Add Icinga user ${name}":
             command => "htpasswd -b -s ${htpasswd} ${name} ${password}",
             unless  => "grep -iE '^${name}:' ${htpasswd}",
-            cwd     => $::icinga::confdir_server,
+            cwd     => $icinga::confdir_server,
           }
         } else {
           exec { "Add Icinga user hash ${name}":
@@ -52,7 +52,7 @@ define icinga::user (
         exec { "Remove Icinga user ${name}":
           command => "htpasswd -D ${htpasswd} ${name}",
           onlyif  => "grep -iE '^${name}:' ${htpasswd}",
-          cwd     => $::icinga::confdir_server,
+          cwd     => $icinga::confdir_server,
         }
       }
 

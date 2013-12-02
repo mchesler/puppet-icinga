@@ -8,8 +8,8 @@ define icinga::plugins::checkmediasalsabackup (
     'centos' => 'nagios-plugins-checkmediasalsabackup',
     'debian' => 'nagios-plugin-checkmediasalsabackup',
   },
-  $notification_period    = $::icinga::notification_period,
-  $notifications_enabled  = $::icinga::notifications_enabled,
+  $notification_period    = $icinga::notification_period,
+  $notifications_enabled  = $icinga::notifications_enabled,
   $host_name              = $::fqdn,
   $backup_location,
   $warning                = '1',
@@ -26,13 +26,13 @@ define icinga::plugins::checkmediasalsabackup (
       }
     }
 
-    file{"${::icinga::includedir_client}/check_mediasalsa_backup_${title}.cfg":
+    file{"${icinga::includedir_client}/check_mediasalsa_backup_${title}.cfg":
       ensure  => 'file',
       mode    => '0644',
-      owner   => $::icinga::client_user,
-      group   => $::icinga::client_group,
-      content => "command[check_mediasalsa_backup_${title}]=sudo ${::icinga::plugindir}/check_mediasalsa_backup -p ${backup_location} -w ${warning} -c ${critical}\n",
-      notify  => Service[$::icinga::service_client],
+      owner   => $icinga::client_user,
+      group   => $icinga::client_group,
+      content => "command[check_mediasalsa_backup_${title}]=sudo ${icinga::plugindir}/check_mediasalsa_backup -p ${backup_location} -w ${warning} -c ${critical}\n",
+      notify  => Service[$icinga::service_client],
     }
 
     @@nagios_service{"check_mediasalsa_backup_${host_name}_${title}":
@@ -42,7 +42,7 @@ define icinga::plugins::checkmediasalsabackup (
       use                   => 'generic-service',
       notification_period   => $notification_period,
       notifications_enabled => $notifications_enabled,
-      target                => "${::icinga::targetdir}/services/${host_name}.cfg",
+      target                => "${icinga::targetdir}/services/${host_name}.cfg",
     }
   }
 }

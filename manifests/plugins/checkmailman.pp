@@ -8,8 +8,8 @@ define icinga::plugins::checkmailman (
     'centos' => 'nagios-plugins-check-mailman',
     'debian' => 'nagios-plugin-check-mailman',
   },
-  $notification_period    = $::icinga::notification_period,
-  $notifications_enabled  = $::icinga::notifications_enabled,
+  $notification_period    = $icinga::notification_period,
+  $notifications_enabled  = $icinga::notifications_enabled,
   $host_name              = $::fqdn,
   $warning                = '15',
   $critical               = '30',
@@ -27,13 +27,13 @@ define icinga::plugins::checkmailman (
       }
     }
 
-    file{"${::icinga::includedir_client}/check_mailman_${title}.cfg":
+    file{"${icinga::includedir_client}/check_mailman_${title}.cfg":
       ensure  => 'file',
       mode    => '0644',
-      owner   => $::icinga::client_user,
-      group   => $::icinga::client_group,
-      content => "command[check_mailman_${title}]=${::icinga::plugindir}/check_mailman -d ${dir} -q ${queue} -w ${warning} -c ${critical}\n",
-      notify  => Service[$::icinga::service_client],
+      owner   => $icinga::client_user,
+      group   => $icinga::client_group,
+      content => "command[check_mailman_${title}]=${icinga::plugindir}/check_mailman -d ${dir} -q ${queue} -w ${warning} -c ${critical}\n",
+      notify  => Service[$icinga::service_client],
     }
 
     @@nagios_service{"check_mailman_${host_name}_${title}":
@@ -43,7 +43,7 @@ define icinga::plugins::checkmailman (
       use                   => 'generic-service',
       notification_period   => $notification_period,
       notifications_enabled => $notifications_enabled,
-      target                => "${::icinga::targetdir}/services/${host_name}.cfg",
+      target                => "${icinga::targetdir}/services/${host_name}.cfg",
     }
   }
 }
