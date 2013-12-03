@@ -29,7 +29,8 @@ class icinga::plugins::pnp4nagios::config {
   }
 
   $vhost = $::operatingsystem ? {
-    default => "${confdir}/apache2-pnp4nagios.conf",
+    /CentOS|RedHat|Scientific|OEL|Amazon/ => '/etc/httpd/conf.d/pnp4nagios.conf',
+    /Debian|Ubuntu/                       => "${confdir}/apache2-pnp4nagios.conf",
   }
 
   $libexec = $::operatingsystem ? {
