@@ -48,7 +48,7 @@ class icinga::config::server::common {
   concat::fragment {'header':
     target  => "$icinga::confdir_server/downtime.cfg",
     order   => 0,
-    content => "# Managed by Puppet\n",
+    content => inline_template("## File managed with puppet ##\n## Served by:          '<%= scope.lookupvar('::servername') %>'\n## Module:             '<%= scope.to_hash['module_name'] %>'\n## Template Source:    '<%= template_source %>'\n"),
   }
 
   file{"${icinga::targetdir}/timeperiods.cfg":
