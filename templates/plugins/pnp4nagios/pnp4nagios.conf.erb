@@ -12,21 +12,21 @@ Alias /pnp4nagios "<%= scope.lookupvar('icinga::plugins::pnp4nagios::config::htm
   #
   # Use the same value as defined in nagios.conf
   #
-  <% if scope.lookupvar('icinga::use_auth') %>
-    AuthName "Icinga Access"
-    AuthType Basic
-    require valid-user
-  <% end %>
-  <% if scope.lookupvar('icinga::use_auth') == 'files' %>
-    AuthUserFile <%= scope.lookupvar('icinga::htpasswd_file') %>
-  <% elsif scope.lookupvar('icinga::use_auth') == 'ldap' %>
-    AuthzLDAPAuthoritative off
-    AuthzLDAPMethod ldap
-    AuthzLDAPServer "<%= scope.lookupvar('::ldap_servers').split(',')[0] %>:389"
-    AuthzLDAPUserKey "uid"
-    AuthzLDAPUserBase "<%= scope.lookupvar('::ldap_user_base_dn') %>,<%= scope.lookupvar('::ldap_base_dn') %>"
-    AuthzLDAPUserScope "subtree"
-  <% end %>
+<% if scope.lookupvar('icinga::use_auth') -%>
+  AuthName "Icinga Access"
+  AuthType Basic
+  require valid-user
+<% end -%>
+<% if scope.lookupvar('icinga::use_auth') == 'files' -%>
+  AuthUserFile <%= scope.lookupvar('icinga::htpasswd_file') %>
+<% elsif scope.lookupvar('icinga::use_auth') == 'ldap' -%>
+  AuthzLDAPAuthoritative off
+  AuthzLDAPMethod ldap
+  AuthzLDAPServer "<%= scope.lookupvar('::ldap_servers').split(',')[0] %>:389"
+  AuthzLDAPUserKey "uid"
+  AuthzLDAPUserBase "<%= scope.lookupvar('::ldap_user_base_dn') %>,<%= scope.lookupvar('::ldap_base_dn') %>"
+  AuthzLDAPUserScope "subtree"
+<% end -%>
 
   <IfModule mod_rewrite.c>
     # Turn on URL rewriting
