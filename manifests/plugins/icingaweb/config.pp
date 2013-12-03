@@ -9,8 +9,16 @@ class icinga::plugins::icingaweb::config {
     ]
   }
 
+  mysql::db { $icinga::icingaweb_dbname:
+    user     => $icinga::icingaweb_dbuser,
+    password => $icinga::icingaweb_dbpass,
+  }
+
   file {
     $icinga::icingaweb_confdir:
+      ensure => directory;
+
+    "${icinga::icingaweb_confdir}/etc/conf.d":
       ensure => directory;
 
     $icinga::icingaweb_logdir:
@@ -20,6 +28,11 @@ class icinga::plugins::icingaweb::config {
       ensure  => present,
       content => template('icinga/plugins/icingaweb/databases.xml'),
       notify  => Exec['db-initialize'];
+
+    "${icinga::icingaweb_confdir}/app/modules/AppKit/config/auth.xml":
+      ensure  => present,
+      content => template('icinga/plugins/icingaweb/auth.xml.erb'),
+      notify  => Service[$icinga::service_webserver];
   }
 
   exec { 'db-initialize':

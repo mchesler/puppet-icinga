@@ -129,7 +129,7 @@ class icinga::params {
 
       # Plugin: Icinga Web
       $icingaweb_pkg     = [ 'icinga-web' ]
-      $icingaweb_pkg_dep = [ 'php', 'php-cli', 'php-pear', 'php-xml', 'php-xmlrpc', 'php-xsl', 'php-pdo', 'php-soap', 'php-gd', 'php-ldap', 'php-mysql', 'perl-Locale-PO' ]
+      $icingaweb_pkg_dep = [ 'php', 'php-cli', 'php-pear', 'php-xml', 'php-xmlrpc', 'libxslt', 'php-pdo', 'php-soap', 'php-gd', 'php-ldap', 'php-mysql', 'perl-Locale-PO', 'php-pear-phing' ]
       $icingaweb_confdir = '/usr/share/icinga-web'
       $icingaweb_bindir  = "${icingaweb_confdir}/bin:${::path}"
       $icingaweb_logdir  = '/usr/share/icinga-web/log'
