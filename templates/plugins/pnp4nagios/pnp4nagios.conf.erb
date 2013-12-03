@@ -15,7 +15,6 @@ Alias /pnp4nagios "<%= scope.lookupvar('icinga::plugins::pnp4nagios::config::htm
 <% if scope.lookupvar('icinga::use_auth') -%>
   AuthName "Icinga Access"
   AuthType Basic
-  require valid-user
 <% end -%>
 <% if scope.lookupvar('icinga::use_auth') == 'files' -%>
   AuthUserFile <%= scope.lookupvar('icinga::htpasswd_file') %>
@@ -26,6 +25,9 @@ Alias /pnp4nagios "<%= scope.lookupvar('icinga::plugins::pnp4nagios::config::htm
   AuthzLDAPUserKey "uid"
   AuthzLDAPUserBase "<%= scope.lookupvar('::ldap_user_base_dn') %>,<%= scope.lookupvar('::ldap_base_dn') %>"
   AuthzLDAPUserScope "subtree"
+<% end -%>
+<% if scope.lookupvar('icinga::use_auth') -%>
+  require valid-user
 <% end -%>
 
   <IfModule mod_rewrite.c>

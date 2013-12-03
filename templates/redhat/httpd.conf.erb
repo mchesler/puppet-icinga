@@ -14,7 +14,6 @@ ScriptAlias /icinga/cgi-bin "<%= scope.lookupvar('icinga::usrlib') %>/icinga/cgi
 <% if scope.lookupvar('icinga::use_auth') -%>
   AuthName "Icinga Access"
   AuthType Basic
-  require valid-user
 <% end -%>
 <% if scope.lookupvar('icinga::use_auth') == 'files' -%>
   AuthUserFile <%= scope.lookupvar('icinga::htpasswd_file') %>
@@ -25,6 +24,9 @@ ScriptAlias /icinga/cgi-bin "<%= scope.lookupvar('icinga::usrlib') %>/icinga/cgi
   AuthzLDAPUserKey "uid"
   AuthzLDAPUserBase "<%= scope.lookupvar('::ldap_user_base_dn') %>,<%= scope.lookupvar('::ldap_base_dn') %>"
   AuthzLDAPUserScope "subtree"
+<% end -%>
+<% if scope.lookupvar('icinga::use_auth') -%>
+  require valid-user
 <% end -%>
 </Directory>
 
@@ -39,7 +41,6 @@ Alias /icinga "/usr/share/icinga/"
 <% if scope.lookupvar('icinga::use_auth') -%>
   AuthName "Icinga Access"
   AuthType Basic
-  require valid-user
 <% end -%>
 <% if scope.lookupvar('icinga::use_auth') == 'files' -%>
   AuthUserFile <%= scope.lookupvar('icinga::htpasswd_file') %>
@@ -50,5 +51,8 @@ Alias /icinga "/usr/share/icinga/"
   AuthzLDAPUserKey "uid"
   AuthzLDAPUserBase "<%= scope.lookupvar('::ldap_user_base_dn') %>,<%= scope.lookupvar('::ldap_base_dn') %>"
   AuthzLDAPUserScope "subtree"
+<% end -%>
+<% if scope.lookupvar('icinga::use_auth') -%>
+  require valid-user
 <% end -%>
 </Directory>
