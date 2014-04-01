@@ -25,8 +25,9 @@ class icinga::preinstall {
   }
 
   file { 'fix-nagios-nrpe-uid-gid.sh':
-    source => 'puppet://icinga/fix-nagios-nrpe-uid-gid.sh',
+    source => 'puppet:///modules/icinga/fix-nagios-nrpe-uid-gid.sh',
     path   => '/opt/tlc/fix-nagios-nrpe-uid-gid.sh',
+    ensure => present,
     mode   => '0500',
     owner  => 'root',
     group  => 'root',
