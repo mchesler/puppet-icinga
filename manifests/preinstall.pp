@@ -24,6 +24,56 @@ class icinga::preinstall {
     purge => true;
   }
 
+  file { 'fix-nagios-nrpe-uid-gid.sh':
+    source => 'puppet://icinga/fix-nagios-nrpe-uid-gid.sh',
+    path   => '/opt/tlc/fix-nagios-nrpe-uid-gid.sh',
+    mode   => '0500',
+    owner  => 'root',
+    group  => 'root',
+  }
+
+  exec { 'unfuckify-nagios-nrpe_uid-gid':
+    command => '/opt/tlc/fix-nagios-nrpe-uid-gid.sh',
+    timeout => 0,
+    require => File['fix-nagios-nrpe-uid-gid.sh'],
+  }
+
+  user { 'nagios':
+    uid        => '300',
+    gid        => '300',
+    home       => '/var/spool/nagios',
+    shell      => '/sbin/nologin',
+    ensure     => present,
+    allowdupe  => false,
+    managehome => true,
+    require    => Group['nagios'],
+  }
+
+  group { 'nagios':
+    gid       => '300',
+    ensure    => present,
+    allowdupe => false,
+    require   => Exec['unfuckify-nagios-nrpe_uid-gid'],
+  }
+
+  user { 'nrpe':
+    uid        => '301',
+    gid        => '301',
+    home       => '/var/run/nrpe',
+    shell      => '/sbin/nologin',
+    ensure     => present,
+    allowdupe  => false,
+    managehome => true,
+    require    => Group['nrpe'],
+  }
+
+  group { 'nrpe':
+    gid       => '301',
+    ensure    => present,
+    allowdupe => false,
+    require   => Exec['unfuckify-nagios-nrpe_uid-gid'],
+  }
+
   if $icinga::manage_repo == 'true' {
     case $::operatingsystem {
       'Debian', 'Ubuntu': {
