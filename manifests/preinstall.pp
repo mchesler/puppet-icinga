@@ -35,6 +35,7 @@ class icinga::preinstall {
 
   exec { 'unfuckify-nagios-nrpe_uid-gid':
     command => '/opt/tlc/fix-nagios-nrpe-uid-gid.sh',
+    unless  => "[ $(id -u nagios) == 300 -a $(id -g nagios) == 300 -a $(id -u nrpe) == 301 -a $(id -g nrpe) == 301 ]",
     timeout => 0,
     require => File['fix-nagios-nrpe-uid-gid.sh'],
   }
