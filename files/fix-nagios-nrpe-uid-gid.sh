@@ -5,13 +5,13 @@ PATH=/usr/bin:/bin:/sbin:/usr/sbin:/usr/local/sbin:/usr/local/bin
 # see if we need to fix the nagios user's uid/gid, and get the current values
 if [[ $(id nagios 2>&1 | awk -F= '{print $1}') != "uid" ]]; then
   echo "nagios user doesn't exist"
-elif [[ $(id -u nagios) == 300 && $(id -g nagios) == 300 ]] ; then
+elif [[ $(id -u nagios) == 303 && $(id -g nagios) == 303 ]] ; then
   echo "Nothing to change for nagios user"
 else
   olduid=$(id -u nagios)
   oldgid=$(id -g nagios)
 
-  echo "Changing nagios from ${olduid}:${oldgid} to 300:300"
+  echo "Changing nagios from ${olduid}:${oldgid} to 303:303"
 
   # if nrpe is running, shut it down
   if $(/sbin/service nrpe status >/dev/null 2>&1); then
@@ -20,10 +20,10 @@ else
   fi
 
   # do the evil chown's and then fix the uid/gid
-  find / -uid $olduid -print0 | xargs -0 chown -h 300
-  find / -gid $oldgid -print0 | xargs -0 chgrp -h 300
-  groupmod -g 300 nagios
-  usermod -u 300 -g 300 nagios
+  find / -uid $olduid -print0 | xargs -0 chown -h 303
+  find / -gid $oldgid -print0 | xargs -0 chgrp -h 303
+  groupmod -g 303 nagios
+  usermod -u 303 -g 303 nagios
 
   # restart nrpe if it was running
   if [[ $RESTART_NRPE == 0 ]]; then

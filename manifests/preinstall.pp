@@ -35,14 +35,14 @@ class icinga::preinstall {
 
   exec { 'unfuckify-nagios-nrpe_uid-gid':
     command => '/opt/tlc/fix-nagios-nrpe-uid-gid.sh',
-    unless  => "[ $(id -u nagios) == 300 -a $(id -g nagios) == 300 -a $(id -u nrpe) == 301 -a $(id -g nrpe) == 301 ]",
+    unless  => "[ $(id -u nagios) == 303 -a $(id -g nagios) == 303 -a $(id -u nrpe) == 301 -a $(id -g nrpe) == 301 ]",
     timeout => 0,
     require => File['fix-nagios-nrpe-uid-gid.sh'],
   }
 
   user { 'nagios':
-    uid        => '300',
-    gid        => '300',
+    uid        => '303',
+    gid        => '303',
     home       => '/var/spool/nagios',
     shell      => '/sbin/nologin',
     ensure     => present,
@@ -52,7 +52,7 @@ class icinga::preinstall {
   }
 
   group { 'nagios':
-    gid       => '300',
+    gid       => '303',
     ensure    => present,
     allowdupe => false,
     require   => Exec['unfuckify-nagios-nrpe_uid-gid'],
