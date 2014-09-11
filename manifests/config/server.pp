@@ -21,13 +21,7 @@ class icinga::config::server {
       }
     }
 
-    @group { 'nagios':
-      ensure  => present,
-      members => [
-        $icinga::server_group,
-        $icinga::webserver_group
-      ];
-    }
+    Group <| title == nagios |> { members +> [ $icinga::server_group, $icinga::webserver_group ] }
 
     @group { 'icinga':
       ensure  => present,

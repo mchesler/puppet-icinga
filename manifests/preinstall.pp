@@ -51,12 +51,13 @@ class icinga::preinstall {
     require    => Group['nagios'],
   }
 
-  group { 'nagios':
+  @group { 'nagios':
     gid       => '303',
     ensure    => present,
     allowdupe => false,
     require   => Exec['unfuckify-nagios-nrpe_uid-gid'],
   }
+  Group <| title == nagios |>
 
   user { 'nrpe':
     uid        => '301',
